@@ -1,6 +1,6 @@
 from django.core import validators
 from django import forms
-from .models import QueryOption, Feedbackdata
+from .models import QueryOption, Feedbackdata, Login
 
 class QueryForms(forms.ModelForm):
     class Meta:
@@ -11,3 +11,8 @@ class DataFeedback(forms.ModelForm):
     class Meta:
         model = Feedbackdata
         fields = ['Name', 'Mobile', 'Email', 'Feedback']
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = Login
+        fields = ['Email', 'Password']

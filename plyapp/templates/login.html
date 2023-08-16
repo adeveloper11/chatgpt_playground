@@ -61,14 +61,14 @@
         float: right;
     }
     .container {
-        background-color: #1E90FF;
+        background-color: #507eab;
         color: #fff;
         border: none;
         cursor: pointer;
         align: center;
         border: 5px solid;
         margin: auto;
-        width: 26%;
+        width: 15%;
         padding: 12px;
     }
     .logo {
@@ -77,14 +77,14 @@
 
 
 </style>
-<title>Feedback</title>
+<title>Admin Login</title>
 </head>
 <body>
     <div class="box">
         <h1>
             <div class="logo">
                 <img src="https://www.workelevate.com/images/we-black-logo.png" width="230"> 
-                <span style="text-transform: lowercase; color: red; font-size: 15px;">playground</span>
+                <span style="text-transform: lowercase; color: red; font-size: 15px;"><i>playground</i></span>
                 <a href="{% url 'generate_text' %}" class = "btn">Home</a>
             </div>
         </h1>   
@@ -94,12 +94,12 @@
             <tbody>
                 <tr>
                     <td>
-                        <h4 style="text-transform: lowercase; color: red; font-size: 25px;">Feedback and Suggestions</h4>
-                            <form action="" method="POST">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <input type="submit" class="submit-button add-button" value="Submit">
-                            </form>
+                        <h4><img src="https://e7.pngegg.com/pngimages/636/819/png-clipart-computer-icons-privacy-policy-admin-icon-copyright-rim-thumbnail.png" width="125"> </h4>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" class="submit-button add-button" value="Submit">
+                        </form>
                     </td>
                 </tr>
             </tbody>   
@@ -107,4 +107,3 @@
     </div>
 </body>
 </html>
-

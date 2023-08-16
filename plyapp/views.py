@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 import openai
-from plyapp.models import ChatLog, QueryOption, Feedbackdata
+from plyapp.models import ChatLog, QueryOption, Feedbackdata, Login
 import re
-from .forms import QueryForms, DataFeedback
+from .forms import QueryForms, DataFeedback, LoginForm
 import random
 
 past_query = []                       #In past query we save to input given by user for re-generation process query.
@@ -48,14 +48,17 @@ def process_query(request):
 
 # data extraction from API.
 def get_generated_text(static_input):
-    openai.api_key = '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'
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=static_input,
-        max_tokens=300
-    )
-    generated_text = response['choices'][0]['text']
-    generated_text = generated_text = generated_text.replace('\n', '<br>')
+    try:
+        openai.api_key = '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'
+        response = openai.Completion.create(
+            engine="text-davinci-002",
+            prompt=static_input,
+            max_tokens=300
+        )
+        generated_text = response['choices'][0]['text']
+        generated_text = generated_text = generated_text.replace('\n', '<br>')
+    except Exception as e:
+        return ("You are querying too fast please hold for a minute !! Thankyou")
     return generated_text
 # Mobile number masking.
 def mask_number(query):
@@ -135,7 +138,16 @@ def feedback(request):
     qf = DataFeedback()
     return render(request, 'feedbackform.html', {"form":qf})
 
+#fun for handeling login
 
-
-
-       
+def login(request):
+    if request.method == 'POST':
+        lgn = LoginForm(request.POST)
+        if lgn.is_valid():
+            lgnemail = lgn.cleaned_data['Email']
+            lgnpass = lgn.cleaned_data['Password']
+            lgnsave = Login(Email = lgnemail, Password = lgnpass)
+            lgnsave.save()
+            lgn = LoginForm()
+    lgn = LoginForm()
+    return render(request, 'login.html', {"form":lgn})

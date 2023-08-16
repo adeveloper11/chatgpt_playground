@@ -8,4 +8,5 @@ urlpatterns = [
     path('delete/<int:id>/', views.delete_option, name='deleteoption'),
     path('<int:id>/', views.updateoption, name='updateoption'),
     path('feedback/', views.feedback, name='feedback'),
+    path('login/', views.login, name='login'),
 ]

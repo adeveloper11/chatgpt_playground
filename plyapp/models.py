@@ -25,3 +25,10 @@ class Feedbackdata(models.Model):
 
     def __str__(self):
         return f"feedback: {self.id, self.Name}"
+    
+class Login(models.Model):
+    Email = models.EmailField(max_length=300)
+    Password = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"loginInfo: {self.Email}"
