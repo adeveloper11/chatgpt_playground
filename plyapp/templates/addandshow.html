@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        padding: 1px;
+        margin-bottom: 10px;
+        text-align: left;
+        background-color: #f1f1f1;
+    }
+
+    .form-box {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+
+    .left-section {
+        padding: 20px;
+    }
+
+    .right-section {
+        background-color: #f9f9f9;
+        padding: 1px;
+        height: 400px; /* Set the desired height */
+        overflow: auto; /* Add scrollbars if content overflows */
+    }
+
+    /* Styling for the table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    /* Styling for buttons */
+    input[type="submit"] {
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    /* Style for "add" "Edit" and "Delete" buttons */
+    .add-button {
+        background-color: #28a745;
+        font-size: 20px;
+    }
+    .edit-button {
+        background-color: #1E90FF;
+        font-size: 14px;
+    }
+
+    .delete-button {
+        background-color: #FF0000;
+        font-size: 14px;
+    }
+
+</style>
+<title>Option View</title>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
+            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
+        </h1>
+    </div>
+    <div class="container">
+        <div class="left-section">
+            <h4>Option data form</h4>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="submit-button add-button" value="Add">
+            </form>
+        </div>
+        <div class="right-section">
+            <h4>Options Information</h4>
+            {% if options %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Index</th>
+                        <th scope="col">Option Name</th>
+                        <th scope="col">Option Value</th>
+                        <th scope="col" colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for option in options%}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ option.option_name }}</td>
+                        <td>{{ option.option_value }} </td>
+                        <td><form action="{% url 'updateoption' option.id %}" method = "post">{% csrf_token %}
+                                <input type="submit" class="submit-button edit-button" value="Edit">
+                            </form></td>
+                        <td><form action="{% url 'deleteoption' option.id %}" method = "post">{% csrf_token %}
+                                <input type="submit" class="submit-button delete-button" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <h5> No records found</h5>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

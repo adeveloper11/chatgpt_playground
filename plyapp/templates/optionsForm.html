@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-align: left;
+        background-color: #f1f1f1;
+    }
+
+    .form-box {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+
+    .left-section {
+        padding: 20px;
+    }
+
+    .right-section {
+        background-color: #f9f9f9;
+        padding: 1px;
+        height: 400px; /* Set the desired height */
+        overflow: auto; /* Add scrollbars if content overflows */
+    }
+
+    /* Styling for the table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    /* Styling for buttons */
+    input[type="submit"] {
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    /* Style for "add" "Edit" and "Delete" buttons */
+    .add-button {
+        background-color: #28a745;
+    }
+    .edit-button {
+        background-color: #1E90FF;
+    }
+
+    .delete-button {
+        background-color: #FF0000;
+    }
+</style>
+    <title>WORKELEVATE playground</title>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
+            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
+        </h1>
+    </div>
+    <div class="container">
+        <div class="left-section">
+            <form id="query-form" method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="option">Enter option and value to add new options:</label>
+                </div>
+                <div>
+                    <label for="option">Title for option</label>
+                    <div>
+                        <textarea id="option1" name="option1" ></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label for="value">Enter value for the option:</label>
+                    <div>
+                        <textarea id="value1" name="value1" ></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button id="submit" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="right-section">
+            <h1>List of all the options with their ID associated</h1>
+            <div class="result-box">
+                <table>
+                    <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>Option</th>
+                          <th>Action</th>
+                      </tr>
+                    </thead>
+                    {% for option in options %}
+                    <tbody>
+                      <tr>
+                        <td>{{ option.id }}</td>
+                        <td>{{ option.option_name }}</td>
+                        <td>
+                            <form action="{% url 'deleteoption' option.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" class="submit-button delete-button" value="Delete">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input type="submit" class="submit-button edit-button" value="Edit">
+                            </form>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to check if both option and query fields are filled
+        function checkInputFields() {
+            const option1Value = document.getElementById('option1').value;
+            const query1Value = document.getElementById('value1').value;
+            const submitBtn = document.getElementById('submit');
+    
+            if (optionValue !== "" && queryValue.trim() !== "") {
+                submitBtn.style.display = 'block';
+            } else {
+                submitBtn.style.display = 'none';
+            }
+        }
+    
+        // Event listeners for input fields
+        const optionField = document.getElementById('option1');
+        optionField.addEventListener('input', checkInputFields);
+    
+        const queryField = document.getElementById('value1');
+        queryField.addEventListener('input', checkInputFields);
+    </script>
+</body>
+</html>

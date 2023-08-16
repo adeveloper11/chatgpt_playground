@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WORKELEVATE playground</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: left;
+            background-color: #f1f1f1;
+        }
+
+        .form-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            flex: 1;
+            box-sizing: border-box;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+        .result-box {
+            flex: 1;
+            box-sizing: border-box;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 300px; /* Set the desired height */
+            overflow: auto; /* Add scrollbars if content overflows */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+
+        button[id="submit"] {
+            background-color: #1E90FF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            float: right;
+            margin-top: 25px;
+        }
+        /* CSS for result box */
+        .result-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            height: 300px; /* Set the desired height */
+            overflow: auto; /* Add scrollbars if content overflows */
+        }
+
+        /* CSS for generated text inside the result box */
+        .result-box p {
+            font-size: 14px;
+            line-height: 1.3;
+            margin-bottom: 7px;
+        }
+
+        /* CSS for the regenerate button */
+        .regenerate-button {
+            background-color: #87CEEB;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            float: right;
+            margin-top: 25px;
+        }
+
+        .regenerate-button:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: .7fr 1.3fr;
+        }
+        
+        .left-section {
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+        
+        .right-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .btn {
+        background-color: #1E90FF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        float: right;
+    }
+    .box {
+            width: 100%;
+            padding: 1px;
+            margin-bottom: 20px;
+            text-align: left;
+            background-color: #f1f1f1;
+        }
+        
+
+    </style>
+<title>WORKELEVATE playground</title>
+</head>
+<body>
+    <div class="box">
+        <h1>
+            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
+            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
+            <a href="{% url 'feedback' %}" class = "btn">Feedback Form</a>
+        </h1>
+    </div>
+    <div class="form-box">
+        <div class="container">
+            <div class="left-section">
+                <form id="query-form" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <label for="option">What do you want to do today:</label>
+                    </div>
+                    <div>
+                        <select name="option" id="option" required>
+                            <option value="">Select Your query</option>
+                            {% for option in options %}
+                            <option value="{{ option.option_value }}">{{ option.option_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="width: 150px; height: 120px; margin-top: 20px;">
+                        <label for="query">Enter your query:</label>
+                        <div style="width: 400px; height: 150px; margin-top: 20px;">
+                            <textarea name="query" rows="15" cols="63"></textarea>
+                        </div>
+                    </div>
+                    <div style="margin-top: 155px;">
+                        <input type="checkbox" id="mask-answer" name="mask-answer" title="we are masking:Mobile number, **...">
+                        <label for="straight-answer" >Mask sensitive info</label>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button id="submit" type="submit " >Search</button>
+                    </div>
+                    
+            </div>
+        </form>
+            <div class="right-section">
+                <div class="result-box width: 4000px; height: 150px;">
+                    <p>{{ generated_text|safe }}</p>
+                </div>
+                    <div>
+                        <form id="query-form" method="post">
+                            {% csrf_token %}
+                            <button id="submit-btn" class="regenerate-button" onclick="regenerateText()" name="regenerate">Regenerate</button>
+                        </form>
+                    </div> 
+            </div>
+        
+        </div>
+    </div>
+    <script>
+        // Function to check if both option and query fields are filled
+        function checkInputFields() {
+            const optionValue = document.getElementById('option').value;
+            const queryValue = document.getElementById('query').value;
+            const submitBtn = document.getElementById('submit');
+    
+            if (optionValue !== "None" && queryValue.trim() !== "") {
+                submitBtn.style.display = 'block';
+            } else {
+                submitBtn.style.display = 'none';
+            }
+        }
+    
+        // Event listeners for input fields
+        const optionField = document.getElementById('option');
+        optionField.addEventListener('change', checkInputFields);
+    
+        const queryField = document.getElementById('query');
+        queryField.addEventListener('input', checkInputFields);
+    </script>
+    
+</body>
+</html>

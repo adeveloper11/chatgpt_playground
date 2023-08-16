@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .box {
+        width: 100%;
+        padding: 1px;
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .row {
+        width: 100%;
+        margin-top: 40px;
+        margin-bottom: 0px;
+        text-align: center;
+        background-color: #f9f9f9;
+        height: 400px; /* Set the desired height */
+    }
+    /* Styling for the table */
+    .table {
+        border-collapse: collapse;
+        margin-top: 20px;
+        text-align: center;
+    }
+    .table th, .table td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* Styling for buttons */
+    input[type="submit"] {
+        background-color: #28a745;
+        font-size: 20px;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    .btn {
+        background-color: #1E90FF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        float: right;
+    }
+    .container {
+        background-color: #1E90FF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        align: center;
+        border: 5px solid;
+        margin: 0;
+        width: 26%;
+        padding: 12px;
+    }
+
+
+</style>
+<title>Feedback</title>
+</head>
+<body>
+    <div class="box">
+        <h1>
+            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
+            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
+            <a href="{% url 'generate_text' %}" class = "btn">Home</a> 
+        </h1>    
+    </div>
+    <div class="container" >
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <h4>Feedback form</h4>
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="submit" class="submit-button add-button" value="Submit">
+                            </form>
+                    </td>
+                </tr>
+            </tbody>   
+        </table>
+    </div>
+</body>
+</html>
+
