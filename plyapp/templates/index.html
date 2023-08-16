@@ -125,18 +125,21 @@
         color: #fff;
         padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         text-decoration: none;
         font-size: 16px;
         cursor: pointer;
         float: right;
-    }
-    .box {
-            width: 100%;
-            padding: 1px;
-            margin-bottom: 20px;
-            text-align: left;
-            background-color: #f1f1f1;
+        }
+        .box {
+                width: 100%;
+                padding: 1px;
+                margin-bottom: 20px;
+                text-align: left;
+                background-color: #f1f1f1;
+            }
+        .logo {
+                margin-left: 50px;
         }
         
 
@@ -146,9 +149,11 @@
 <body>
     <div class="box">
         <h1>
-            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
-            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
-            <a href="{% url 'feedback' %}" class = "btn">Feedback Form</a>
+            <div class="logo">
+                <img src="https://www.workelevate.com/images/we-black-logo.png" width="230"> 
+                <span style="text-transform: lowercase; color: red; font-size: 15px;">playground</span>
+                <a href="{% url 'feedback' %}" class = "btn">Feedback Form</a>
+            </div>
         </h1>
     </div>
     <div class="form-box">

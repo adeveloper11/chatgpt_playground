@@ -54,11 +54,14 @@
         color: #fff;
         padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        border-radius: 20px;
         text-decoration: none;
         font-size: 16px;
         cursor: pointer;
         float: right;
+    }
+    .logo {
+        margin-left: 50px;
     }
 
 
@@ -68,16 +71,17 @@
 <body>
     <div class="container">
         <h1>
-            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
-            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
-            {% comment %} <a href="{% url 'generate_text' %}" class = "btn">Home</a> {% endcomment %}
-            <a href="{% url 'addandshow' %}" class = "btn">Back</a>
+            <div class="logo">
+                <img src="https://www.workelevate.com/images/we-black-logo.png" width="230"> 
+                <span style="text-transform: lowercase; color: red; font-size: 15px;">playground</span>
+                <a href="{% url 'addandshow' %}" class = "btn">Back</a>
+            </div>
         </h1>    
     </div>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Update options</th>
+                <th scope="col">Update option list</th>
             </tr>
         </thead>
         <tbody>

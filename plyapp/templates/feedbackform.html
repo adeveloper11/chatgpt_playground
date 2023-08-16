@@ -34,7 +34,7 @@
     .table th, .table td {
         border: 1px solid #ccc;
         padding: 6px;
-        font-size: 14px;
+        font-size: 20px;
         text-align: center;
     }
 
@@ -54,7 +54,7 @@
         color: #fff;
         padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         text-decoration: none;
         font-size: 16px;
         cursor: pointer;
@@ -67,10 +67,13 @@
         cursor: pointer;
         align: center;
         border: 5px solid;
-        margin: 0;
+        margin: auto;
         width: 26%;
         padding: 12px;
     }
+    .logo {
+        margin-left: 50px;
+}
 
 
 </style>
@@ -79,10 +82,12 @@
 <body>
     <div class="box">
         <h1>
-            <span style="text-transform: uppercase; color: DodgerBlue; font-size: 35px;">WORKELEVATE</span>
-            <span style="text-transform: lowercase; color: grey; font-size: 20px;">playground</span>
-            <a href="{% url 'generate_text' %}" class = "btn">Home</a> 
-        </h1>    
+            <div class="logo">
+                <img src="https://www.workelevate.com/images/we-black-logo.png" width="230"> 
+                <span style="text-transform: lowercase; color: red; font-size: 15px;">playground</span>
+                <a href="{% url 'generate_text' %}" class = "btn">Home</a>
+            </div>
+        </h1>   
     </div>
     <div class="container" >
         <table class="table">
