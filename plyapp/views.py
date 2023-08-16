@@ -49,7 +49,7 @@ def process_query(request):
 # data extraction from API.
 def get_generated_text(static_input):
     try:
-        openai.api_key = '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'
+        openai.api_key = 'API_KEYS'
         response = openai.Completion.create(
             engine="text-davinci-002",
             prompt=static_input,
