@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>WORKELEVATE playground</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -147,6 +148,7 @@
 <title>WORKELEVATE playground</title>
 </head>
 <body>
+    
     <div class="box">
         <h1>
             <div class="logo">
@@ -183,46 +185,64 @@
                         <label for="straight-answer" >Mask sensitive info</label>
                     </div>
                     <div style="margin-top: 15px;">
-                        <button id="submit" type="submit " >Search</button>
-                    </div>
-                    
+                        <button id="submit" type="submit " onclick="handleSearch()">Search</button>
+                    </div>                   
             </div>
         </form>
             <div class="right-section">
-                <div class="result-box width: 4000px; height: 150px;">
-                    <p>{{ generated_text|safe }}</p>
+                <div class="result-box" style="width: 600px; height: 200px;">
+                    <p id="generated-text">{{ generated_text|safe }}</p>
+                    <span id="timer"></span>
                 </div>
-                    <div>
-                        <form id="query-form" method="post">
-                            {% csrf_token %}
-                            <button id="submit-btn" class="regenerate-button" onclick="regenerateText()" name="regenerate">Regenerate</button>
-                        </form>
-                    </div> 
-            </div>
-        
+                <div>
+                    <form id="query-form" method="post">
+                        {% csrf_token %}
+                        <button id="submit-btn" class="regenerate-button" onclick="regenerateText()" name="regenerate">Regenerate</button>
+                    </form>
+                </div>
+            </div>       
         </div>
     </div>
-    <script>
-        // Function to check if both option and query fields are filled
-        function checkInputFields() {
-            const optionValue = document.getElementById('option').value;
-            const queryValue = document.getElementById('query').value;
-            const submitBtn = document.getElementById('submit');
-    
-            if (optionValue !== "None" && queryValue.trim() !== "") {
-                submitBtn.style.display = 'block';
-            } else {
-                submitBtn.style.display = 'none';
-            }
+
+<script>
+    $(document).ready(function() {
+        // Function to start timer
+        function startTimer(duration, display, searchButton, regenerateButton) {
+            let timer = duration, minutes, seconds;
+            searchButton.hide();
+            regenerateButton.hide(); // Hide both buttons
+
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.text(minutes + ":" + seconds);
+
+                if (--timer < 0) {
+                    display.text("Now, you can start querying");
+                    searchButton.show(); // Show the search button
+                    regenerateButton.show(); // Show the regenerate button
+                }
+            }, 1000);
         }
+
+        // Check for specific output from Django
+        const generatedText = $("#generated-text").text();
+        const searchButton = $("#submit"); // Get the search button
+        const regenerateButton = $("#submit-btn"); // Get the regenerate button
+
+        if (generatedText.includes("You are querying too fast")) {
+            const oneMinute = 60;
+            const timerDisplay = $("#timer");
+            startTimer(oneMinute, timerDisplay, searchButton, regenerateButton);
+        }
+    });
+</script>
+
     
-        // Event listeners for input fields
-        const optionField = document.getElementById('option');
-        optionField.addEventListener('change', checkInputFields);
-    
-        const queryField = document.getElementById('query');
-        queryField.addEventListener('input', checkInputFields);
-    </script>
     
 </body>
 </html>

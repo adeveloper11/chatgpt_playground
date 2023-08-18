@@ -5,10 +5,15 @@ from plyapp.models import ChatLog, QueryOption, Feedbackdata, Login
 import re
 from .forms import QueryForms, DataFeedback, LoginForm
 import random
+from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+# processing data for the expected output.
 past_query = []                       #In past query we save to input given by user for re-generation process query.
 options = QueryOption.objects.all()   #gettig option data from batbase.
-# processing data for the expected output.
 def process_query(request):
     options = QueryOption.objects.all()
     global past_query
@@ -45,11 +50,10 @@ def process_query(request):
         generated_text = static_input
         generated_text = generated_text = generated_text.replace('\n', '<br>')
     return render(request, 'index.html', {'generated_text': generated_text,'options':options })
-
 # data extraction from API.
 def get_generated_text(static_input):
     try:
-        openai.api_key = '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'
+        openai.api_key = os.getenv("api_key")
         response = openai.Completion.create(
             engine="text-davinci-002",
             prompt=static_input,
@@ -58,8 +62,9 @@ def get_generated_text(static_input):
         generated_text = response['choices'][0]['text']
         generated_text = generated_text = generated_text.replace('\n', '<br>')
     except Exception as e:
-        return ("You are querying too fast please hold for a minute !! Thankyou")
+        return ("You are querying too fast please start querying after timer ends")
     return generated_text
+
 # Mobile number masking.
 def mask_number(query):
     numbers = re.findall(r'\b\d+\b|\+\d+', query)
