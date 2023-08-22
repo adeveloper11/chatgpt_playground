@@ -10,12 +10,11 @@
         padding: 0;
     }
 
-    .container {
+    .box {
         width: 100%;
         padding: 1px;
-        margin-bottom: 10px;
-        text-align: left;
-        background-color: #f1f1f1;
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
     }
 
     .row {
@@ -24,18 +23,19 @@
         margin-bottom: 0px;
         text-align: center;
         background-color: #f9f9f9;
-        height: 200px; /* Set the desired height */
+        height: 400px; /* Set the desired height */
     }
     /* Styling for the table */
     .table {
-        width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
+        text-align: center;
     }
     .table th, .table td {
         border: 1px solid #ccc;
         padding: 6px;
-        font-size: 14px;
+        font-size: 20px;
+        text-align: center;
     }
 
     /* Styling for buttons */
@@ -54,51 +54,59 @@
         color: #fff;
         padding: 10px 20px;
         border: none;
-        border-radius: 20px;
+        border-radius: 25px;
         text-decoration: none;
         font-size: 16px;
         cursor: pointer;
         float: right;
     }
+    .container {
+        background-color: #1E90FF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        align: center;
+        border: 5px solid;
+        margin: auto;
+        width: 19%;
+        padding: 12px;
+        border-radius: 25px;
+    }
     .logo {
         margin-left: 50px;
-    }
+}
 
 
 </style>
-<title>Update Option</title>
+<title>Updateoption</title>
 </head>
 <body>
-    <div class="container">
+    <div class="box">
         <h1>
             <div class="logo">
                 <img src="https://www.workelevate.com/images/we-black-logo.png" width="230"> 
                 <span style="text-transform: lowercase; color: red; font-size: 15px;">playground</span>
-                <a href="{% url 'addandshow' %}" class = "btn">Back</a>
+                <a href="{% url 'generate_text' %}" class = "btn">Home</a>
             </div>
-        </h1>    
+        </h1>   
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Update option list</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="container">
-                        <div class="row">
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <input type="submit" value="Update">
-                            </form>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </tbody>   
-    </table>
+    <div class="container" >
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>   
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value="Update">
+                        </form>
+                    </td>
+                </tr>
+            </tbody>   
+        </table>
+    </div>
 </body>
 </html>
+
+
+                

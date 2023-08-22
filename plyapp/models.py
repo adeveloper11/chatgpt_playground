@@ -1,4 +1,3 @@
-
 from django.db import models
 
 class ChatLog(models.Model):
@@ -25,3 +24,4 @@ class Feedbackdata(models.Model):
 
     def __str__(self):
         return f"feedback: {self.id, self.Name}"
+    

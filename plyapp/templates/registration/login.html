@@ -39,7 +39,7 @@
     }
 
     /* Styling for buttons */
-    input[type="button"] {
+    input[type="submit"] {
         background-color: #28a745;
         font-size: 20px;
         color: #fff;
@@ -68,17 +68,15 @@
         align: center;
         border: 5px solid;
         margin: auto;
-        width: 27%;
+        width: 19%;
         padding: 12px;
         border-radius: 25px;
     }
     .logo {
         margin-left: 50px;
 }
-
-
 </style>
-<title>Updateoption</title>
+<title>Admin-Login</title>
 </head>
 <body>
     <div class="box">
@@ -94,37 +92,18 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <td>   
-                        <form method="post">
+                    <td>
+                        <h4><img src="https://e7.pngegg.com/pngimages/636/819/png-clipart-computer-icons-privacy-policy-admin-icon-copyright-rim-thumbnail.png" width="125"> </h4>
+                        <form action="" method="POST">
                             {% csrf_token %}
-                            {{ form.Name.label_tag }} {{ form.Name }} <br>
-                            {{ form.Mobile.label_tag }} {{ form.Mobile }}
-                            <span id="lblError" style="color: red;"></span>
-                            <br>{{ form.Email.label_tag }} {{ form.Email }} <br>
-                            {{ form.Feedback.label_tag }} {{ form.Feedback }}<br>
-                            <input type="button" class="submit-button add-button" id="submitFeedback" value="Submit" onclick="validateAndSubmit()">
+                            {{ form.as_p }}
+                            <input type="submit" class="submit-button add-button" value="Submit">
                         </form>
-                        
-                        <script type="text/javascript">
-                            function validateAndSubmit() {
-                                var Mobile = document.getElementById("id_Mobile").value;
-                                var lblError = document.getElementById("lblError");
-                                lblError.innerHTML = "";
-                                var expr = /^(0|91)?[6-9][0-9]{9}$/;
-                                
-                                if (!expr.test(Mobile)) {
-                                    lblError.innerHTML = "Invalid";
-                                } else {
-                                    // If valid, submit the form
-                                    document.querySelector('form').submit();
-                                }
-                            }
-                        </script>
                     </td>
                 </tr>
             </tbody>   
         </table>
     </div>
 </body>
-</html>   
+</html>
 
